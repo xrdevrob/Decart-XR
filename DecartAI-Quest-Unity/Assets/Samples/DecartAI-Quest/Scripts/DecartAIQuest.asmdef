@@ -1,0 +1,27 @@
+{
+    "name": "DecartAI.Quest",
+    "rootNamespace": "DecartAI.Quest",
+    "references": [
+        "Unity.XR.Management",
+        "Unity.XR.Oculus",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "Unity.RenderPipelines.Universal",
+        "SimpleWebRTC",
+        "VoiceSDK.Runtime",
+        "Meta.WitAi",
+        "Meta.WitAi.Lib",
+        "Oculus.VR",
+        "Meta.XR.SDK.Core",
+        "PassthroughCameraSamples"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

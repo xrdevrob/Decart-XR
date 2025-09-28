@@ -1,0 +1,21 @@
+{
+    "name": "DecartAI.Quest.Editor",
+    "rootNamespace": "DecartAI.Quest.Editor",
+    "references": [
+        "DecartAI.Quest",
+        "Unity.XR.Management.Editor",
+        "Unity.XR.Oculus.Editor",
+        "SimpleWebRTC"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
