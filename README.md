@@ -18,11 +18,12 @@
 </p>
 
 <p align="center">
-  <img src="assets/images/cyberpunk.png" alt="Cyberpunk Style" width="200" style="margin: 5px;">
-  <img src="assets/images/ultra-realistic.png" alt="Ultra Realistic Style" width="200" style="margin: 5px;">
-  <img src="assets/images/Lego.png" alt="LEGO Style" width="200" style="margin: 5px;">
-  <img src="assets/images/MC.png" alt="Minecraft Style" width="200" style="margin: 5px;">
+  <img src="assets/images/luxury.png" alt="Cyberpunk Style" width="200" style="margin: 5px;">
+  <img src="assets/images/ultrareal.png" alt="Ultra Realistic Style" width="200" style="margin: 5px;">
+  <img src="assets/images/lego-world.png" alt="LEGO Style" width="200" style="margin: 5px;">
+  <img src="assets/images/minecraft.png" alt="Minecraft Style" width="200" style="margin: 5px;">
 </p>
+
 
 Developed by Decart AI, this Unity application demonstrates real-time AI-powered video transformation on Meta Quest 3 devices, enabling users to live inside AI-generated art with sub-200ms latency. Released as an open sourced project for researchers, developers, and the Quest community to explore the intersection of VR and AI.
 
@@ -52,7 +53,7 @@ This project showcases Decart's `MirageLSD-704px-16FPS` model - the first real-t
 
 1. **Clone the Repository**
    ```bash
-   git clone git@github.com:DecartAI/mirage-xr-quest.git
+   git clone https://github.com/DecartAI/Decart-XR.git
    cd QuestCameraKit
    ```
 
