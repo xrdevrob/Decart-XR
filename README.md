@@ -75,9 +75,12 @@ This project showcases Decart's `MirageLSD-704px-16FPS` model - the first real-t
    ```
 
 6. **Build for Quest**
-   - Switch platform to Android
+   - Switch platform to Android (File → Build Settings → Android → Switch Platform)
    - Configure build settings for Quest 3
-   - Build and install APK to headset
+   - Open Edit → Project Settings → Meta XR and resolve configuration issues:
+     - In Outstanding Issues: Fix all issues EXCEPT "Hand Tracking must be enabled in OVRManager when using its Building Block" and "When Using Passthrough Building Block as an underlay it's required to set the camera background to transparent" (keep these unfixed)
+     - In Recommended Items: Fix all recommendations EXCEPT "Use Low Overhead Mode" and "Hand tracking support is set to 'Controllers Only', hand tracking will not work in this mode" (keep these unfixed)
+   - Build and install APK to headset (File → Build Settings → Build)
 
 7. **Launch & Enjoy**
    - Grant camera permissions when prompted
