@@ -136,3 +136,6 @@ Assets/.avatar_sdk_sample_assets_importer.txt
 # Additional Quest/WebRTC specific
 WebRTCLogs/
 *.webrtc.log
+
+assets/images.meta
+assets/images/*
