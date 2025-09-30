@@ -17,7 +17,11 @@
 *.apk
 *.zip
 *.zip.meta
-*.dll
+# Ignore only generated/build DLLs, not third-party assets in Assets/
+/[Ll]ibrary/**/*.dll
+/[Bb]uild/**/*.dll
+/[Bb]uilds/**/*.dll
+/[Tt]emp/**/*.dll
 *.unitypackage
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
@@ -88,7 +92,6 @@ Assets/Oculus/VR/Editor/Tools.meta
 imgui.ini
 
 **/Photon/
-**/TextMesh Pro/
 Assets/Resources/OculusPlatformSettings.asset
 Assets/Resources/OVRPlatformToolSettings.asset
 ProjectSettings/QualitySettings.asset
