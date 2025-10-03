@@ -4557,12 +4557,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d9cb92af9ba954882ecb0647c1b74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passthroughCameraManager: {fileID: 1436385067}
   canvasRawImage: {fileID: 557677174}
-  connectionGameObject: {fileID: 805715864782633738}
-  receivedVideoImage: {fileID: 0}
   promptNameText: {fileID: 1709945471}
-  _pendingCustomPrompt: 
+  webRtcConnection: {fileID: 6985653293374303736}
+  passthroughCameraManager: {fileID: 1436385067}
 --- !u!1 &1766049787
 GameObject:
   m_ObjectHideFlags: 0
