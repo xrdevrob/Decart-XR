@@ -28,9 +28,9 @@ Developed by Decart AI, this Unity application demonstrates real-time AI-powered
 ## ✨ Features
 
 - 🎥 **Real-time Camera Capture** - Direct access to Quest 3 passthrough cameras
-- 🤖 **AI World Transformation & Custom Prompts** - tons of built-in visual styles plus unlimited custom voice descriptions
+- 🤖 **Dual AI Models** - Mirage (61 world transformations) and Lucy (15 person transformations) with unlimited custom voice descriptions
 - ⚡ **Ultra-low Latency** - ~150-200ms end-to-end processing time
-- 🌐 **WebRTC Streaming** - Efficient VP8 video encoding at 16fps
+- 🌐 **WebRTC Streaming** - Efficient VP8 video encoding at 30fps
 - 📱 **VR-Optimized UI** - Native Quest interface with live preview and processed video display
 
 ## 🚀 Quick Start
@@ -80,7 +80,8 @@ This project showcases Decart's real-time video-to-video AI transformation syste
 
 7. **Launch & Enjoy**
    - Grant camera permissions when prompted
-   - Use A/B buttons to cycle through AI styles or use you voice to create new prompt when pressing the Index Trigger button
+   - Select AI model: Press A for Mirage (world transformations) or B for Lucy (person transformations)
+   - Use A/B buttons to cycle through prompts or use your voice to create custom prompts by holding the Index Trigger button
    - See live transformation in real-time!
 
 ## 🎤 Voice Control Setup
@@ -173,8 +174,8 @@ For detailed technical documentation, see the Wiki
 ### Key Components
 
 - `WebRTCController.cs` - Main application controller and UI management
-- `WebRTCConnection.cs` - Unity WebRTC lifecycle and video streaming
-- `WebRTCManager.cs` - Core WebRTC logic and 152 AI prompt library
+- `WebRTCConnection.cs` - Unity WebRTC lifecycle, video streaming, and model selection
+- `WebRTCManager.cs` - Core WebRTC logic with dual AI prompt libraries (61 Mirage + 15 Lucy)
 - `WebCamTextureManager.cs` - Quest camera integration via Unity API
 - `PassthroughCameraUtils.cs` - Android Camera2 API integration
 - `PassthroughCameraPermissions.cs` - Runtime permission management

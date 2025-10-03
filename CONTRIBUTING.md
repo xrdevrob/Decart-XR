@@ -70,7 +70,9 @@ For new features, please:
 #### Areas We Welcome Contributions
 
 1. **AI Style Enhancements**
-   - Add new prompts to `WebRTCManager.cs` (lines 90-152)
+   - Add new prompts to appropriate model in `WebRTCManager.cs`:
+     - `miragePrompts` (lines 89-151): World transformations like Cyberpunk, Frozen, Lego
+     - `lucyPrompts` (lines 153-169): Person transformations like Spiderman, Medieval Knight
    - Test custom prompts with `SendCustomPrompt()`
    - Document style descriptions for optimal AI results
 
@@ -126,6 +128,7 @@ For new features, please:
 
 3. **Test Requirements**
    - Verify functionality on actual Quest 3/3S device
+   - Test with both Mirage and Lucy AI models
    - Test with different network conditions
    - Ensure no regression in existing features
    - Check memory usage doesn't increase significantly
@@ -146,6 +149,7 @@ For new features, please:
 ### Required Testing
 
 - **Hardware Testing**: Must test on actual Quest hardware
+- **Model Testing**: Test with both Mirage and Lucy models to ensure compatibility
 - **Network Testing**: Test with various connection speeds
 - **Performance Testing**: Monitor CPU, GPU, memory usage
 - **Compatibility Testing**: Test with different Unity versions
@@ -163,7 +167,7 @@ For new features, please:
 | File | Purpose |
 |------|---------|
 | `WebRTCController.cs` | Main application controller |
-| `WebRTCManager.cs` | Core WebRTC logic and AI prompts |
+| `WebRTCManager.cs` | Core WebRTC logic with dual AI prompt banks (61 Mirage + 15 Lucy) |
 | `WebCamTextureManager.cs` | Quest camera integration |
 | `PassthroughCameraUtils.cs` | Android Camera2 API |
 
