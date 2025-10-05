@@ -8,24 +8,11 @@ using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
-    [Tooltip("OVR Passthrough layer to animate transparency when experience starts.")]
-    [SerializeField] private OVRPassthroughLayer passthroughLayer;
-
     [Tooltip("Canvas displaying local webcam feed for WebRTC.")]
     [SerializeField] private GameObject WebRTCWebcamCanvas;
 
     [Tooltip("Camera used for recording or capturing effects (optional).")]
     [SerializeField] private Camera recordingCamera;
-
-    [Header("Audio/Visual")]
-    [Tooltip("Set of looping audio clips used for force-field sounds.")]
-    [SerializeField] private AudioClip[] forceFieldSounds;
-
-    [Tooltip("AudioSource used to play force-field and wave sounds.")]
-    [SerializeField] private AudioSource audioSource;
-
-    [Tooltip("Material controlling intro shader effect. Needs '_CustomTime' float property.")]
-    [SerializeField] private Material introEffectMaterial;
 
     [Header("Networking")]
     [Tooltip("WebRTC connection that handles model selection and video streaming.")]
@@ -77,14 +64,6 @@ public class GameManager : MonoBehaviour
     private void StartExperience()
     {
         _didStart = true;
-
-        if (passthroughLayer)
-        {
-            _passthroughTween = DOTween.To(
-                () => passthroughLayer.textureOpacity,
-                x => passthroughLayer.textureOpacity = x,
-                0.25f, 1f);
-        }
 
         if (_videoTransmissionPending)
         {

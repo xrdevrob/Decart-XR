@@ -3,6 +3,7 @@
     "com.endel.nativewebsocket": "file:../LocalPackages/com.endel.nativewebsocket",
     "com.firedragongamestudio.simplewebrtc": "file:../LocalPackages/com.firedragongamestudio.simplewebrtc",
     "com.meta.xr.sdk.core": "78.0.0",
+    "com.meta.xr.sdk.interaction.ovr": "78.0.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.6.0",
     "com.unity.ide.rider": "3.0.38",
