@@ -69,6 +69,7 @@ namespace SimpleWebRTC {
         public WebSocket ws;
         private bool isLocalPeerVideoAudioSender;
         private bool isLocalPeerVideoAudioReceiver;
+        private RawImage _fallbackSceneReceiver;
 
         public RTCPeerConnection pc;
 
@@ -299,10 +300,35 @@ namespace SimpleWebRTC {
                         };
                     } else {
                         // Drop frames if needed for immediate display - only update if new frame
-                        video.OnVideoReceived += tex => {
-                            if (VideoReceiver != null && VideoReceiver.texture != tex) {
-                                VideoReceiver.texture = tex;
+                        video.OnVideoReceived += tex =>
+                        {
+                            // 1) Preferred path: an explicit receiver was assigned by WebRTCConnection.
+                            if (VideoReceiver != null)
+                            {
+                                if (VideoReceiver.texture != tex)
+                                    VideoReceiver.texture = tex;
+                                return;
                             }
+
+                            // 2) Fallback (no cross-assembly references): find a RawImage named or tagged "StreamDisplay".
+                            if (_fallbackSceneReceiver == null)
+                            {
+                                var go = GameObject.Find("StreamDisplay");
+                                if (go == null)
+                                    go = GameObject.FindGameObjectWithTag("StreamDisplay");
+
+                                if (go != null)
+                                    _fallbackSceneReceiver = go.GetComponent<RawImage>();
+
+                                if (_fallbackSceneReceiver == null)
+                                {
+                                    Debug.LogWarning("[WebRTCManager] No target RawImage found. Assign TargetStreamRawImage on WebRTCConnection or name/tag a RawImage 'StreamDisplay'.");
+                                    return;
+                                }
+                            }
+
+                            if (_fallbackSceneReceiver.texture != tex)
+                                _fallbackSceneReceiver.texture = tex;
                         };
                     }
 

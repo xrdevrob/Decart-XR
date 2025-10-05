@@ -13,9 +13,6 @@ namespace QuestCameraKit.WebRTC
         [Tooltip("UI RawImage where the local passthrough camera feed will be displayed.")]
         [SerializeField] private RawImage canvasRawImage;
 
-        [Tooltip("UI Text element that shows the current prompt fed to the Decart model.")]
-        [SerializeField] private TMP_Text promptNameText;
-
         [Tooltip("Reference to the WebRTCConnection handling signaling and video streaming.")]
         [SerializeField] private WebRTCConnection webRtcConnection;
 
@@ -63,7 +60,6 @@ namespace QuestCameraKit.WebRTC
             }
 
             webRtcConnection.VideoTransmissionReceived.AddListener(OnVideoReceived);
-            webRtcConnection.PromptNameUpdated.AddListener(UpdatePromptName);
             Debug.Log("WebRTCController: Initialized successfully.");
         }
 
@@ -74,20 +70,11 @@ namespace QuestCameraKit.WebRTC
                 return;
             }
             webRtcConnection.VideoTransmissionReceived.RemoveListener(OnVideoReceived);
-            webRtcConnection.PromptNameUpdated.RemoveListener(UpdatePromptName);
         }
 
         private void OnVideoReceived()
         {
             _videoReceivedAndReady = true;
-        }
-
-        private void UpdatePromptName(string promptKey)
-        {
-            if (promptNameText != null)
-            {
-                promptNameText.text = string.IsNullOrEmpty(promptKey) ? "" : promptKey;
-            }
         }
 
         public void QueueCustomPrompt(string prompt)

@@ -40,6 +40,10 @@ namespace SimpleWebRTC {
         public bool IsReceiver => IsVideoAudioReceiver;
         public bool ExperimentalSupportFor6DOF => experimentalSupportFor6DOF;
         public Transform ExperimentalSpectatorCam6DOF => experimentalSpectatorCam6DOF;
+        
+        [Header("UI Receiving Target")]
+        [Tooltip("Existing RawImage in the scene that should display the remote video. Optional. If not set, we will look for an object named or tagged 'StreamDisplay'.")]
+        [SerializeField] private RawImage TargetStreamRawImage;
 
         private bool startWebRTCUpdate;
         private bool stopWebRTCUpdate;
@@ -468,9 +472,34 @@ namespace SimpleWebRTC {
             IsVideoTransmissionActive = false;
         }
 
-        public void CreateVideoReceiverGameObject(string senderPeerId) {
+        public void CreateVideoReceiverGameObject(string senderPeerId)
+        {
             videoReceiverSenderPeerId = senderPeerId;
-            createVideoReceiver = true;
+
+            // Prefer the explicitly assigned RawImage from the inspector.
+            RawImage target = TargetStreamRawImage;
+
+            // If none was assigned, try to find one by name or tag (no direct GameManager references).
+            if (target == null)
+            {
+                var go = GameObject.Find("StreamDisplay");
+                if (go == null)
+                    go = GameObject.FindGameObjectWithTag("StreamDisplay");
+
+                if (go != null)
+                    target = go.GetComponent<RawImage>();
+            }
+
+            if (target != null)
+            {
+                // Tell the manager to pipe incoming frames to this RawImage.
+                webRTCManager.VideoReceiver = target;
+                Debug.Log($"[WebRTCConnection] Using existing RawImage '{target.name}' for remote stream.");
+            }
+            else
+            {
+                Debug.LogWarning("[WebRTCConnection] No RawImage target found (TargetStreamRawImage is null and 'StreamDisplay' not found). Video won't be visible.");
+            }
         }
 
         private void CreateVideoReceiver() {
