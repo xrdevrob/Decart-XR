@@ -2,57 +2,71 @@ using UnityEngine;
 using PassthroughCameraSamples;
 
 /// <summary>
-/// Aligns a RawImage canvas with the passthrough camera's left (or right) eye.
-/// It positions the canvas far in front (e.g. 10 m) so it fills the background,
-/// matching the camera’s field of view once at startup.
+/// Precisely aligns a RawImage canvas so that it matches the passthrough camera’s
+/// physical projection. Every pixel corresponds to what the left (or right) eye camera sees.
 /// </summary>
 [DefaultExecutionOrder(100)]
-public class CameraCanvasAligner : MonoBehaviour
+public class CameraCanvasAlignerProper : MonoBehaviour
 {
-    [SerializeField, Tooltip("The RectTransform of the RawImage canvas to align.")]
-    private RectTransform canvasTransform;
-
-    [SerializeField, Tooltip("Which passthrough camera eye to align with (Left or Right).")]
-    private PassthroughCameraEye eye = PassthroughCameraEye.Left;
-
-    [SerializeField, Tooltip("Distance in meters from the camera. Use a large value (e.g., 10) for a background effect.")]
+    [SerializeField] private RectTransform canvasTransform;
+    [SerializeField] private PassthroughCameraEye eye = PassthroughCameraEye.Left;
+    [SerializeField, Tooltip("Distance in meters from the camera projection plane. 10m gives a 'background' feel.")]
     private float distanceFromCamera = 10f;
 
     private void Start()
     {
         if (!PassthroughCameraUtils.EnsureInitialized())
         {
-            Debug.LogError("[CameraCanvasAligner] Passthrough Camera not initialized.");
+            Debug.LogError("[CameraCanvasAlignerProper] Passthrough Camera not initialized.");
             return;
         }
 
-        AlignCanvasToEye();
+        AlignToPassthroughCamera();
     }
 
-    private void AlignCanvasToEye()
+    private void AlignToPassthroughCamera()
     {
-        // Get passthrough camera pose in world space
-        Pose cameraPose = PassthroughCameraUtils.GetCameraPoseInWorld(eye);
-
-        // Get intrinsics for FOV-based scaling
+        // 1. Get the passthrough camera intrinsics
         var intrinsics = PassthroughCameraUtils.GetCameraIntrinsics(eye);
-        float fovX = Mathf.Atan(intrinsics.Resolution.x / (2f * intrinsics.FocalLength.x)) * 2f * Mathf.Rad2Deg;
-        float fovY = Mathf.Atan(intrinsics.Resolution.y / (2f * intrinsics.FocalLength.y)) * 2f * Mathf.Rad2Deg;
+        var camPose = PassthroughCameraUtils.GetCameraPoseInWorld(eye);
 
-        // Convert FOV to physical width/height at the target distance
-        float widthAtDistance = 2f * distanceFromCamera * Mathf.Tan(fovX * Mathf.Deg2Rad / 2f);
-        float heightAtDistance = 2f * distanceFromCamera * Mathf.Tan(fovY * Mathf.Deg2Rad / 2f);
+        float fx = intrinsics.FocalLength.x;
+        float fy = intrinsics.FocalLength.y;
+        float cx = intrinsics.PrincipalPoint.x;
+        float cy = intrinsics.PrincipalPoint.y;
+        float width = intrinsics.Resolution.x;
+        float height = intrinsics.Resolution.y;
 
-        // Scale the canvas in world space to match the FOV area
+        // 2. Compute half-angles in radians from intrinsics
+        float left = -cx / fx;
+        float right = (width - cx) / fx;
+        float top = cy / fy;
+        float bottom = -(height - cy) / fy;
+
+        // 3. Get the 4 corner points at the target plane distance
+        Vector3[] corners = new Vector3[4];
+        corners[0] = new Vector3(left,  top,  1); // upper left
+        corners[1] = new Vector3(right, top,  1); // upper right
+        corners[2] = new Vector3(right, bottom, 1); // lower right
+        corners[3] = new Vector3(left,  bottom, 1); // lower left
+
+        for (int i = 0; i < 4; i++)
+            corners[i] *= distanceFromCamera; // scale to plane distance
+
+        // 4. Calculate plane width/height from those corners
+        float widthMeters = Vector3.Distance(corners[0], corners[1]);
+        float heightMeters = Vector3.Distance(corners[0], corners[3]);
+
+        // 5. Scale the canvas so its rect fits exactly that physical size
         Vector2 canvasSize = canvasTransform.sizeDelta;
-        float scaleX = widthAtDistance / canvasSize.x;
-        float scaleY = heightAtDistance / canvasSize.y;
+        float scaleX = widthMeters / canvasSize.x;
+        float scaleY = heightMeters / canvasSize.y;
         canvasTransform.localScale = new Vector3(scaleX, scaleY, 1f);
 
-        // Align and rotate with camera
-        canvasTransform.position = cameraPose.position + cameraPose.rotation * Vector3.forward * distanceFromCamera;
-        canvasTransform.rotation = cameraPose.rotation;
+        // 6. Position the canvas in front of the camera
+        canvasTransform.position = camPose.position + camPose.rotation * Vector3.forward * distanceFromCamera;
+        canvasTransform.rotation = camPose.rotation;
 
-        Debug.Log($"[CameraCanvasAligner] Canvas aligned with {eye} eye, distance {distanceFromCamera:F1}m, scale ({scaleX:F3}, {scaleY:F3}).");
+        Debug.Log($"[CameraCanvasAlignerProper] Canvas aligned using intrinsics: {widthMeters:F3}m × {heightMeters:F3}m plane at {distanceFromCamera:F1}m");
     }
 }
