@@ -199,7 +199,7 @@ namespace PassthroughCameraSamples
 
         #region Private methods
 
-        internal static bool EnsureInitialized()
+        public static bool EnsureInitialized()
         {
             if (CameraEyeToCameraIdMap.Count == 2)
             {
