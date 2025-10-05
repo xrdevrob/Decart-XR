@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     private bool _animatingIntroEffect;
     private bool _videoTransmissionPending;
     private Tween _passthroughTween;
+    private Tween _forceFieldSoundTween;
     private static readonly int CustomTime = Shader.PropertyToID("_CustomTime");
 
     private void Start()
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         _passthroughTween?.Kill();
+        _forceFieldSoundTween?.Kill();
     }
 
     private void ShowModelSelectionPrompt()
@@ -239,6 +241,7 @@ public class GameManager : MonoBehaviour
 
     private void StopForceFieldSounds()
     {
+        _forceFieldSoundTween?.Kill();
         audioSource?.Stop();
     }
 
@@ -254,7 +257,7 @@ public class GameManager : MonoBehaviour
         audioSource.Play();
 
         const float clipLength = 1.5f;
-        DOVirtual.DelayedCall(clipLength, () =>
+        _forceFieldSoundTween = DOVirtual.DelayedCall(clipLength, () =>
         {
             _currentSoundIndex = (_currentSoundIndex + 1) % forceFieldSounds.Length;
             PlayNextForceFieldSound();
