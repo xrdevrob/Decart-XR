@@ -2959,23 +2959,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6446084041748658870, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4283,7 +4283,7 @@ MonoBehaviour:
   currentTimeLabel: {fileID: 1416363140}
   totalTimeLabel: {fileID: 1085595040}
   fadeDuration: 0.5
-  hideDelay: 2
+  hideDelay: 1
 --- !u!4 &1222724925
 Transform:
   m_ObjectHideFlags: 0
@@ -4306,14 +4306,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222724923}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 340b780a6ff2098489caf430a49772e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   videoUI: {fileID: 601129342}
-  scaleFactor: 1.2
+  scaleFactor: 1.4
   yAxisOnly: 0
+  invertFacing: 1
 --- !u!114 &1364080190 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5829911603703383240, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
@@ -4454,7 +4455,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _autoOpen
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaSource
@@ -4827,6 +4828,7 @@ GameObject:
   - component: {fileID: 2001773003}
   - component: {fileID: 2001773002}
   - component: {fileID: 2001773001}
+  - component: {fileID: 2001773005}
   m_Layer: 6
   m_Name: MainCanvas
   m_TagString: Untagged
@@ -4917,6 +4919,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1280, y: 960}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &2001773005
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001773000}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &2010122891 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 564933769065832114, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
@@ -5140,6 +5154,7 @@ MonoBehaviour:
   webRtcConnection: {fileID: 6985653293374303736}
   loadingScreenGroup: {fileID: 770700954}
   videoScreenGroup: {fileID: 1608129062}
+  streamingCanvas: {fileID: 2001773005}
   fadeDuration: 2
   pulseMinAlpha: 0.2
   pulseCycleDuration: 2

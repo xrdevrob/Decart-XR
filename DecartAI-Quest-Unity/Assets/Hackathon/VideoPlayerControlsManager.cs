@@ -25,17 +25,20 @@ public class VideoPlayerControlsManager : MonoBehaviour
 
     [Header("Fade Settings")]
     [SerializeField] private float fadeDuration = 0.5f;
-    [SerializeField] private float hideDelay = 2f;
+    [SerializeField] private float hideDelay = 1.5f;
 
     private Tween _fadeTween;
     private Coroutine _hideCoroutine;
     private bool _isHovered;
     private bool _hasStarted;
+    private double _cachedDuration;
 
     private void Start()
     {
         if (!mediaPlayer)
+        {
             mediaPlayer = FindFirstObjectByType<MediaPlayer>();
+        }
 
         playerControlsGroup.alpha = 0f;
         playerControlsGroup.interactable = false;
@@ -137,7 +140,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
     {
         if (mediaPlayer && mediaPlayer.Control != null)
         {
-            double duration = mediaPlayer.Info.GetDuration();
+            double duration = _cachedDuration > 0 ? _cachedDuration : mediaPlayer.Info.GetDuration();
             double newTime = Mathf.Clamp(
                 (float)(mediaPlayer.Control.GetCurrentTime() + seconds),
                 0f,
@@ -155,14 +158,10 @@ public class VideoPlayerControlsManager : MonoBehaviour
 
     private void OnTimelineScrub(float value)
     {
-        if (!mediaPlayer || mediaPlayer.Info == null)
+        if (!mediaPlayer || _cachedDuration <= 0)
             return;
 
-        double duration = mediaPlayer.Info.GetDuration();
-        if (duration <= 0)
-            return;
-
-        double targetTime = duration * value;
+        double targetTime = _cachedDuration * value;
         mediaPlayer.Control.Seek(targetTime);
     }
 
@@ -171,19 +170,26 @@ public class VideoPlayerControlsManager : MonoBehaviour
         var wait = new WaitForSeconds(0.2f);
         while (true)
         {
-            if (mediaPlayer && mediaPlayer.Info != null && mediaPlayer.Info.GetDuration() > 0)
+            if (mediaPlayer && mediaPlayer.Info != null)
             {
-                double duration = mediaPlayer.Info.GetDuration();
-                double currentTime = mediaPlayer.Control.GetCurrentTime();
+                // Cache total duration once when it becomes valid
+                if (_cachedDuration <= 0 && mediaPlayer.Info.GetDuration() > 0)
+                {
+                    _cachedDuration = mediaPlayer.Info.GetDuration();
+                    if (totalTimeLabel)
+                        totalTimeLabel.text = FormatTime(_cachedDuration);
+                }
 
-                if (timelineSlider)
-                    timelineSlider.SetValueWithoutNotify((float)(currentTime / duration));
+                if (_cachedDuration > 0)
+                {
+                    double currentTime = mediaPlayer.Control.GetCurrentTime();
 
-                if (currentTimeLabel)
-                    currentTimeLabel.text = FormatTime(currentTime);
+                    if (timelineSlider)
+                        timelineSlider.SetValueWithoutNotify((float)(currentTime / _cachedDuration));
 
-                if (totalTimeLabel)
-                    totalTimeLabel.text = FormatTime(duration);
+                    if (currentTimeLabel)
+                        currentTimeLabel.text = FormatTime(currentTime);
+                }
             }
             yield return wait;
         }

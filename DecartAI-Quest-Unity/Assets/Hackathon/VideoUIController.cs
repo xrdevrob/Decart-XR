@@ -9,11 +9,12 @@ public class VideoUIController : MonoBehaviour
     [SerializeField] private WebRTCConnection webRtcConnection;
     [SerializeField] private CanvasGroup loadingScreenGroup;
     [SerializeField] private CanvasGroup videoScreenGroup;
+    [SerializeField] private CanvasGroup streamingCanvas;
 
     [Header("Animation Settings")]
-    [SerializeField] private float fadeDuration = 1.0f;
-    [SerializeField] private float pulseMinAlpha = 0.4f;
-    [SerializeField] private float pulseCycleDuration = 1.5f;
+    [SerializeField] private float fadeDuration = 2f;
+    [SerializeField] private float pulseMinAlpha = 0.2f;
+    [SerializeField] private float pulseCycleDuration = 2f;
 
     private Tween _pulseTween;
     private bool _hasConnected;
@@ -35,8 +36,6 @@ public class VideoUIController : MonoBehaviour
         loadingScreenGroup.gameObject.SetActive(true);
 
         StartLoadingPulse();
-
-        // Subscribe to ICE state changes
         webRtcConnection.OnIceConnectionStateChanged += HandleIceStateChanged;
     }
 
@@ -75,6 +74,7 @@ public class VideoUIController : MonoBehaviour
         DOTween.Sequence()
             .Append(loadingScreenGroup.DOFade(0f, fadeDuration))
             .Join(videoScreenGroup.DOFade(1f, fadeDuration))
+            .Join(streamingCanvas.DOFade(1f, fadeDuration*2))
             .OnComplete(() =>
             {
                 loadingScreenGroup.gameObject.SetActive(false);
