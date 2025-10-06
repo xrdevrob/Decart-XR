@@ -12,12 +12,18 @@ public class PanelBillboardController : MonoBehaviour
     [Tooltip("Base scale factor — tweak until panel appears desired size in frustum.")]
     [SerializeField] private float scaleFactor = 1.4f;
 
+    [Tooltip("Minimum allowed scale multiplier.")]
+    [SerializeField] private float minScale = 0.4f;
+
+    [Tooltip("Maximum allowed scale multiplier.")]
+    [SerializeField] private float maxScale = 5f;
+
     [Tooltip("If true, panel only rotates around Y axis (keeps upright).")]
     [SerializeField] private bool yAxisOnly;
 
     [Tooltip("If true, flips rotation direction (for back-facing canvases).")]
     [SerializeField] private bool invertFacing;
-    
+
     private Camera _targetCamera;
 
     private void Start()
@@ -28,10 +34,9 @@ public class PanelBillboardController : MonoBehaviour
     private void Update()
     {
         if (!_targetCamera || !videoUI)
-        {
             return;
-        }
 
+        // --- ROTATION ---
         Vector3 directionToCamera = invertFacing
             ? videoUI.transform.position - _targetCamera.transform.position
             : _targetCamera.transform.position - videoUI.transform.position;
@@ -47,6 +52,11 @@ public class PanelBillboardController : MonoBehaviour
 
         // --- SCALING ---
         float distance = Vector3.Distance(_targetCamera.transform.position, videoUI.transform.position);
-        videoUI.transform.localScale = Vector3.one * distance * scaleFactor;
+        float targetScale = distance * scaleFactor;
+
+        // Clamp within min/max bounds
+        targetScale = Mathf.Clamp(targetScale, minScale, maxScale);
+
+        videoUI.transform.localScale = Vector3.one * targetScale;
     }
 }

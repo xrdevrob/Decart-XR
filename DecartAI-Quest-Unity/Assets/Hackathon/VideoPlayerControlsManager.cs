@@ -4,6 +4,7 @@ using DG.Tweening;
 using RenderHeads.Media.AVProVideo;
 using TMPro;
 using System.Collections;
+using UnityEngine.EventSystems;
 using Tween = DG.Tweening.Tween;
 
 public class VideoPlayerControlsManager : MonoBehaviour
@@ -33,6 +34,10 @@ public class VideoPlayerControlsManager : MonoBehaviour
     private bool _isHovered;
     private bool _hasStarted;
     private double _cachedDuration;
+
+    // --- Scrubbing state ---
+    private bool _isDragging;
+    private bool _wasPlayingBeforeDrag;
 
     private void Start()
     {
@@ -70,7 +75,9 @@ public class VideoPlayerControlsManager : MonoBehaviour
             volumeSlider.onValueChanged.AddListener(SetVolume);
 
         if (timelineSlider)
+        {
             timelineSlider.onValueChanged.AddListener(OnTimelineScrub);
+        }
     }
 
     private void ResetMomentaryToggle(Toggle toggle)
@@ -81,10 +88,8 @@ public class VideoPlayerControlsManager : MonoBehaviour
     public void ShowControls()
     {
         if (!videoUIController.serverConnected)
-        {
             return;
-        }
-        
+
         _isHovered = true;
         if (_hideCoroutine != null)
         {
@@ -138,7 +143,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
             mediaPlayer.Control.Pause();
         }
 
-        ForceTimelineRefresh();   // 👈 ensure UI updates immediately
+        ForceTimelineRefresh();
     }
 
     private void SkipSeconds(float seconds)
@@ -152,7 +157,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
                 (float)duration
             );
             mediaPlayer.Control.Seek(newTime);
-            ForceTimelineRefresh();   // 👈 update immediately
+            ForceTimelineRefresh();
         }
     }
 
@@ -162,21 +167,60 @@ public class VideoPlayerControlsManager : MonoBehaviour
             mediaPlayer.AudioVolume = value;
     }
 
+    // --- Scrubbing ---
     private void OnTimelineScrub(float value)
     {
         if (!mediaPlayer || GetDurationSafe() <= 0)
             return;
 
-        double targetTime = GetDurationSafe() * value;
+        if (_isDragging)
+        {
+            // Update preview label while dragging
+            double previewTime = GetDurationSafe() * value;
+            if (currentTimeLabel)
+                currentTimeLabel.text = FormatTime(previewTime);
+        }
+        else
+        {
+            // Final scrub seek when slider is released
+            double targetTime = GetDurationSafe() * value;
+            mediaPlayer.Control.Seek(targetTime);
+            ForceTimelineRefresh();
+        }
+    }
+
+    private void OnTimelineDragStart()
+    {
+        if (!mediaPlayer || mediaPlayer.Control == null)
+            return;
+
+        _isDragging = true;
+        _wasPlayingBeforeDrag = mediaPlayer.Control.IsPlaying();
+        if (_wasPlayingBeforeDrag)
+            mediaPlayer.Control.Pause();
+    }
+
+    private void OnTimelineDragEnd()
+    {
+        if (!mediaPlayer || mediaPlayer.Control == null)
+            return;
+
+        _isDragging = false;
+        double targetTime = GetDurationSafe() * timelineSlider.value;
         mediaPlayer.Control.Seek(targetTime);
         ForceTimelineRefresh();
+
+        // Resume playback if it was playing before
+        if (_wasPlayingBeforeDrag)
+            mediaPlayer.Control.Play();
     }
 
     private IEnumerator UpdateTimelineRoutine()
     {
         while (true)
         {
-            UpdateTimelineUI();
+            if (!_isDragging) // Skip updates while dragging
+                UpdateTimelineUI();
             yield return null;
         }
     }
@@ -202,7 +246,6 @@ public class VideoPlayerControlsManager : MonoBehaviour
 
     private double GetDurationSafe()
     {
-        // Cache once if not already cached
         if (_cachedDuration <= 0)
         {
             if (mediaPlayer?.Info != null && mediaPlayer.Info.GetDuration() > 0)
@@ -225,7 +268,6 @@ public class VideoPlayerControlsManager : MonoBehaviour
 
     private void ForceTimelineRefresh()
     {
-        // Immediately update timeline and labels after seek/play/pause
         UpdateTimelineUI();
     }
 
@@ -237,3 +279,5 @@ public class VideoPlayerControlsManager : MonoBehaviour
         return $"{minutes:D2}:{secs:D2}";
     }
 }
+
+

@@ -614,7 +614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 27e7f5ee63f342048a08da58947e3e8b, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2959,23 +2959,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6423196156621410765, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 6446084041748658870, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4315,6 +4315,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoUI: {fileID: 601129342}
   scaleFactor: 1.4
+  minScale: 0.4
+  maxScale: 5
   yAxisOnly: 0
   invertFacing: 1
 --- !u!114 &1222724927
@@ -4480,12 +4482,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: _mediaReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 4844808027b36464d9a0540bf1de6663, type: 2}
+    - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _autoPlayOnStart
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaPath._path
-      value: Hackathon/48f0bd0caa735721_3f749fb3ad0345f1a96e4965cf54e7e3.mp4
+      value: Hackathon/The Weeknd - Open Hearts (Official Video).mp4
       objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaPath._pathType
