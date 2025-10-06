@@ -200,6 +200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PassthroughDissolver
       objectReference: {fileID: 0}
+    - target: {fileID: 4752345847531877884, guid: 66a8d85094fa74d4884f99c6fe473bbc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8651239098607501989, guid: 66a8d85094fa74d4884f99c6fe473bbc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1168,17 +1172,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6535208471237231144, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
   m_PrefabInstance: {fileID: 1025204572}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1085595040 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8354999662938344749, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
-  m_PrefabInstance: {fileID: 1125141028}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1125141028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4319,7 +4312,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -80
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7838296480590776857, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+    - {fileID: 7838296480590776870, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7838296481668790697, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
     - {fileID: 7838296480424488568, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
@@ -4428,8 +4423,11 @@ MonoBehaviour:
   skipForwardToggle: {fileID: 1714335056}
   timelineSlider: {fileID: 2010122891}
   volumeSlider: {fileID: 1364080190}
-  currentTimeLabel: {fileID: 1416363140}
-  totalTimeLabel: {fileID: 1085595040}
+  currentTimeLabel: {fileID: 0}
+  totalTimeLabel: {fileID: 0}
+  playPauseImg: {fileID: 1987927595}
+  playIcon: {fileID: 21300000, guid: d4ae5723e2af1db46a725bb774b9c177, type: 3}
+  pauseIcon: {fileID: 21300000, guid: 3c3e113f498c83147a4746db75b5b4aa, type: 3}
   fadeDuration: 0.5
   hideDelay: 1
 --- !u!4 &1222724925
@@ -4490,17 +4488,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1416363140 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2347482069823907561, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
-  m_PrefabInstance: {fileID: 1125141028}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1436385066
@@ -4881,6 +4868,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2884551590656239879, guid: c4c3d1e663f18b842bd8c79f246f1f70, type: 3}
   m_PrefabInstance: {fileID: 1981779789}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1987927595 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2529457791014486780, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+  m_PrefabInstance: {fileID: 1125141028}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2001773000
 GameObject:
   m_ObjectHideFlags: 0
@@ -4992,7 +4990,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001773000}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5020,7 +5018,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2041474325}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5087,9 +5085,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: b41ab2bd689bcb24daa44e1cfb463972, type: 3}
+  m_Resource: {fileID: 8300000, guid: b41ab2bd689bcb24daa44e1cfb463972, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 0.59
   m_Pitch: 1
   Loop: 0
