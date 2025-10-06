@@ -4252,6 +4252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1222724925}
+  - component: {fileID: 1222724927}
   - component: {fileID: 1222724924}
   - component: {fileID: 1222724926}
   m_Layer: 0
@@ -4275,6 +4276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mediaPlayer: {fileID: 1481109559}
   playerControlsGroup: {fileID: 2041474328}
+  videoUIController: {fileID: 2081375601}
   playPauseToggle: {fileID: 74826023}
   skipBackToggle: {fileID: 1752926242}
   skipForwardToggle: {fileID: 1714335056}
@@ -4315,6 +4317,22 @@ MonoBehaviour:
   scaleFactor: 1.4
   yAxisOnly: 0
   invertFacing: 1
+--- !u!114 &1222724927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222724923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b34a3bb1ce49c14dad62b9081bf3c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mediaPlayer: {fileID: 1481109559}
+  timedPrompts: []
+  webRtcController: {fileID: 2081375599}
+  triggerTolerance: 0.1
 --- !u!114 &1364080190 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5829911603703383240, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
@@ -5158,6 +5176,7 @@ MonoBehaviour:
   fadeDuration: 2
   pulseMinAlpha: 0.2
   pulseCycleDuration: 2
+  serverConnected: 0
 --- !u!20 &135406155566937053
 Camera:
   m_ObjectHideFlags: 0

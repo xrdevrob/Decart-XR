@@ -11,6 +11,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private MediaPlayer mediaPlayer;
     [SerializeField] private CanvasGroup playerControlsGroup;
+    [SerializeField] private VideoUIController videoUIController;
 
     [Header("UI Elements (Toggles)")]
     [SerializeField] private Toggle playPauseToggle;
@@ -25,7 +26,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
 
     [Header("Fade Settings")]
     [SerializeField] private float fadeDuration = 0.5f;
-    [SerializeField] private float hideDelay = 1.5f;
+    [SerializeField] private float hideDelay = 2f;
 
     private Tween _fadeTween;
     private Coroutine _hideCoroutine;
@@ -36,9 +37,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
     private void Start()
     {
         if (!mediaPlayer)
-        {
             mediaPlayer = FindFirstObjectByType<MediaPlayer>();
-        }
 
         playerControlsGroup.alpha = 0f;
         playerControlsGroup.interactable = false;
@@ -81,6 +80,11 @@ public class VideoPlayerControlsManager : MonoBehaviour
 
     public void ShowControls()
     {
+        if (!videoUIController.serverConnected)
+        {
+            return;
+        }
+        
         _isHovered = true;
         if (_hideCoroutine != null)
         {
@@ -127,26 +131,28 @@ public class VideoPlayerControlsManager : MonoBehaviour
                 _hasStarted = true;
                 FadeControls(1f);
             }
-
             mediaPlayer.Control.Play();
         }
         else
         {
             mediaPlayer.Control.Pause();
         }
+
+        ForceTimelineRefresh();   // 👈 ensure UI updates immediately
     }
 
     private void SkipSeconds(float seconds)
     {
         if (mediaPlayer && mediaPlayer.Control != null)
         {
-            double duration = _cachedDuration > 0 ? _cachedDuration : mediaPlayer.Info.GetDuration();
+            double duration = GetDurationSafe();
             double newTime = Mathf.Clamp(
                 (float)(mediaPlayer.Control.GetCurrentTime() + seconds),
                 0f,
                 (float)duration
             );
             mediaPlayer.Control.Seek(newTime);
+            ForceTimelineRefresh();   // 👈 update immediately
         }
     }
 
@@ -158,41 +164,69 @@ public class VideoPlayerControlsManager : MonoBehaviour
 
     private void OnTimelineScrub(float value)
     {
-        if (!mediaPlayer || _cachedDuration <= 0)
+        if (!mediaPlayer || GetDurationSafe() <= 0)
             return;
 
-        double targetTime = _cachedDuration * value;
+        double targetTime = GetDurationSafe() * value;
         mediaPlayer.Control.Seek(targetTime);
+        ForceTimelineRefresh();
     }
 
     private IEnumerator UpdateTimelineRoutine()
     {
-        var wait = new WaitForSeconds(0.2f);
         while (true)
         {
-            if (mediaPlayer && mediaPlayer.Info != null)
-            {
-                // Cache total duration once when it becomes valid
-                if (_cachedDuration <= 0 && mediaPlayer.Info.GetDuration() > 0)
-                {
-                    _cachedDuration = mediaPlayer.Info.GetDuration();
-                    if (totalTimeLabel)
-                        totalTimeLabel.text = FormatTime(_cachedDuration);
-                }
-
-                if (_cachedDuration > 0)
-                {
-                    double currentTime = mediaPlayer.Control.GetCurrentTime();
-
-                    if (timelineSlider)
-                        timelineSlider.SetValueWithoutNotify((float)(currentTime / _cachedDuration));
-
-                    if (currentTimeLabel)
-                        currentTimeLabel.text = FormatTime(currentTime);
-                }
-            }
-            yield return wait;
+            UpdateTimelineUI();
+            yield return null;
         }
+    }
+
+    private void UpdateTimelineUI()
+    {
+        if (!mediaPlayer || mediaPlayer.Control == null)
+            return;
+
+        double duration = GetDurationSafe();
+        if (duration <= 0)
+            return;
+
+        double currentTime = mediaPlayer.Control.GetCurrentTime();
+        float normalized = Mathf.Clamp01((float)(currentTime / duration));
+
+        if (timelineSlider)
+            timelineSlider.SetValueWithoutNotify(normalized);
+
+        if (currentTimeLabel)
+            currentTimeLabel.text = FormatTime(currentTime);
+    }
+
+    private double GetDurationSafe()
+    {
+        // Cache once if not already cached
+        if (_cachedDuration <= 0)
+        {
+            if (mediaPlayer?.Info != null && mediaPlayer.Info.GetDuration() > 0)
+            {
+                _cachedDuration = mediaPlayer.Info.GetDuration();
+            }
+            else if (mediaPlayer?.Control != null)
+            {
+                var range = mediaPlayer.Control.GetSeekableTimes();
+                if (range.Duration > 0)
+                    _cachedDuration = range.Duration;
+            }
+
+            if (_cachedDuration > 0 && totalTimeLabel)
+                totalTimeLabel.text = FormatTime(_cachedDuration);
+        }
+
+        return _cachedDuration;
+    }
+
+    private void ForceTimelineRefresh()
+    {
+        // Immediately update timeline and labels after seek/play/pause
+        UpdateTimelineUI();
     }
 
     private string FormatTime(double seconds)

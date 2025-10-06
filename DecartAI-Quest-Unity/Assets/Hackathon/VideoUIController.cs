@@ -16,6 +16,7 @@ public class VideoUIController : MonoBehaviour
     [SerializeField] private float pulseMinAlpha = 0.2f;
     [SerializeField] private float pulseCycleDuration = 2f;
 
+    public bool serverConnected;
     private Tween _pulseTween;
     private bool _hasConnected;
 
@@ -80,5 +81,6 @@ public class VideoUIController : MonoBehaviour
                 loadingScreenGroup.gameObject.SetActive(false);
                 videoScreenGroup.alpha = 1f;
             });
+        serverConnected = true;
     }
 }
