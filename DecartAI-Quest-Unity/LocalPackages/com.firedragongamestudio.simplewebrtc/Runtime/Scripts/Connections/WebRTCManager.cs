@@ -59,6 +59,8 @@ namespace SimpleWebRTC {
         public event Action<WebSocketState> OnWebSocketConnection;
         public event Action OnWebRTCConnection;
         public event Action OnVideoStreamEstablished;
+        
+        public event Action<RTCIceConnectionState> OnIceConnectionStateChanged;
 
         public bool IsWebSocketConnected { get; private set; }
         public bool IsWebSocketConnectionInProgress { get; private set; }
@@ -268,24 +270,32 @@ namespace SimpleWebRTC {
                 ws.SendText(JsonUtility.ToJson(candidateMessage));
             };
 
-            pc.OnIceConnectionChange = state => {
+            pc.OnIceConnectionChange = state =>
+            {
                 SimpleWebRTCLogger.Log($"{localPeerId} connection changed to {state}");
+                OnIceConnectionStateChanged?.Invoke(state);
 
-                switch(state) {
+                switch (state)
+                {
                     case RTCIceConnectionState.Completed:
                         connectionGameObject.Connect();
                         OnWebRTCConnection?.Invoke();
                         connectionGameObject.ConnectWebRTC();
                         break;
+
+                    case RTCIceConnectionState.Connected:
+                        // We can also explicitly trigger WebRTCConnectionActive = true earlier if desired
+                        break;
+
                     case RTCIceConnectionState.Failed:
                         SimpleWebRTCLogger.LogError("ICE connection failed");
                         break;
+
                     case RTCIceConnectionState.Disconnected:
                         SimpleWebRTCLogger.LogError("ICE connection disconnected");
                         break;
                 }
             };
-
 
             pc.OnTrack = e => {
                 if (e.Track is VideoStreamTrack video) {

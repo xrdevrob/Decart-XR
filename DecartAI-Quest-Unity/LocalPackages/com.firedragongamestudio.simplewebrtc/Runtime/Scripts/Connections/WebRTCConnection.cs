@@ -98,6 +98,12 @@ namespace SimpleWebRTC {
         [SerializeField] private RectTransform ReceivingRawImagesParent;
         [SerializeField] private Material streamMaterial;
         public UnityEvent VideoTransmissionReceived;
+        
+        public event Action<RTCIceConnectionState> OnIceConnectionStateChanged
+        {
+            add => webRTCManager.OnIceConnectionStateChanged += value;
+            remove => webRTCManager.OnIceConnectionStateChanged -= value;
+        }
 
         private WebRTCManager webRTCManager;
         private VideoStreamTrack videoStreamTrack;

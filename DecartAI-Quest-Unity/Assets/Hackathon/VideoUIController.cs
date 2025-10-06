@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using SimpleWebRTC;
+using Unity.WebRTC;
 
 public class VideoUIController : MonoBehaviour
 {
@@ -28,27 +29,20 @@ public class VideoUIController : MonoBehaviour
             return;
         }
 
-        // Initialize UI states
         loadingScreenGroup.alpha = 1f;
         videoScreenGroup.alpha = 0f;
         videoScreenGroup.gameObject.SetActive(true);
         loadingScreenGroup.gameObject.SetActive(true);
 
         StartLoadingPulse();
-    }
 
-    private void Update()
-    {
-        // Trigger fade once WebRTCConnectionActive = true (ICE Connected)
-        if (!_hasConnected && webRtcConnection != null && webRtcConnection.WebRTCConnectionActive)
-        {
-            _hasConnected = true;
-            OnConnected();
-        }
+        // Subscribe to ICE state changes
+        webRtcConnection.OnIceConnectionStateChanged += HandleIceStateChanged;
     }
 
     private void OnDestroy()
     {
+        webRtcConnection.OnIceConnectionStateChanged -= HandleIceStateChanged;
         _pulseTween?.Kill();
     }
 
@@ -61,19 +55,30 @@ public class VideoUIController : MonoBehaviour
             .SetEase(Ease.InOutSine);
     }
 
+    private void HandleIceStateChanged(RTCIceConnectionState state)
+    {
+        if (_hasConnected)
+            return;
+
+        if (state == RTCIceConnectionState.Connected)
+        {
+            _hasConnected = true;
+            OnConnected();
+        }
+    }
+
     private void OnConnected()
     {
-        Debug.Log("[VideoUIController] WebRTC ICE state: Connected — fading to video.");
+        Debug.Log("[VideoUIController] ICE Connected — fading out loading screen.");
 
         _pulseTween?.Kill();
-
         DOTween.Sequence()
             .Append(loadingScreenGroup.DOFade(0f, fadeDuration))
             .Join(videoScreenGroup.DOFade(1f, fadeDuration))
             .OnComplete(() =>
             {
                 loadingScreenGroup.gameObject.SetActive(false);
-                videoScreenGroup.alpha = 1f; // finalize
+                videoScreenGroup.alpha = 1f;
             });
     }
 }
