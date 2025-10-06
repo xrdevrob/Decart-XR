@@ -4478,13 +4478,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: _audioMuted
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: _audioVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaSource
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaReference
       value: 
-      objectReference: {fileID: 11400000, guid: 4844808027b36464d9a0540bf1de6663, type: 2}
+      objectReference: {fileID: 11400000, guid: 0d696b76d81c0e640a7dbcc2d148b9ec, type: 2}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _autoPlayOnStart
       value: 0
@@ -4495,11 +4503,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaPath._pathType
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4520225963232478244, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: m_Name
       value: MediaPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5522826916627314479, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: m_Volume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5522826916627314479, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: m_PlayOnAwake
