@@ -1,88 +1,82 @@
-Shader "Robertolino/UI/SDF Shader"
+// Copyright (c) Meta Platforms, Inc. and affiliates.
+
+Shader "MRMotifs/SDFShader"
 {
     Properties
     {
-        _MainTex ("Sprite Texture", 2D) = "white" {}
-        _Color ("Tint", Color) = (1,1,1,1)
-        _FadeWidth ("Fade Width", Range(0.01, 0.5)) = 0.1
+        _MainTex("Main Texture", 2D) = "white" {}
+        _Color("Color", Color) = (1,1,1,1)
+        _EdgeSharpness("Edge Sharpness", Range(1,20)) = 8.0
+        _Level("Level", Range(0,1)) = 0.5
     }
+
     SubShader
     {
-        Tags
-        {
-            "Queue"="Transparent"
-            "IgnoreProjector"="True"
-            "RenderType"="Transparent"
-            "PreviewType"="Plane"
-        }
+        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        LOD 200
+
         Cull Off
-        Lighting Off
         ZWrite Off
+        ZTest LEqual
         Blend SrcAlpha OneMinusSrcAlpha
+        BlendOp Add
+
         Pass
         {
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
+
+            sampler2D _MainTex;
+            float4 _Color;
+            float _EdgeSharpness;
+            float _Level;
+
             struct appdata
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                float4 color : COLOR;
+                UNITY_VERTEX_INPUT_INSTANCE_ID        // 👈 for XR single-pass instancing
             };
+
             struct v2f
             {
-                float4 vertex : SV_POSITION;
-                float2 uv : TEXCOORD0;
-                float4 color : COLOR;
+                float4 pos : SV_POSITION;
+                float2 uv  : TEXCOORD0;
+                UNITY_VERTEX_OUTPUT_STEREO            // 👈 per-eye data
             };
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-            fixed4 _Color;
-            float _FadeWidth;
-            // Signed Distance Function for a box
-            float sdBox(float2 p, float2 b)
-            {
-                float2 d = abs(p) - b;
-                return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
-            }
+
             v2f vert(appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.color = v.color;
+                UNITY_SETUP_INSTANCE_ID(v);            // 👈 initialize instance for current eye
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+                o.pos = UnityObjectToClipPos(v.vertex);
+                o.uv = v.uv;
                 return o;
             }
+
             fixed4 frag(v2f i) : SV_Target
             {
-                // Sample texture
-                fixed4 col = tex2D(_MainTex, i.uv);
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);  // 👈 ensure correct eye sampling
 
-                // Apply tint and vertex color
-                col *= _Color * i.color;
+                fixed4 col = tex2D(_MainTex, i.uv) * _Color;
 
-                // Convert UV to centered coordinates (-0.5 to 0.5)
-                float2 centeredUV = i.uv - 0.5;
+                // Basic SDF dissolve logic (preserved from your original intent)
+                float dist = tex2D(_MainTex, i.uv).r;
+                float mask = smoothstep(
+                    _Level - (1.0 / _EdgeSharpness),
+                    _Level + (1.0 / _EdgeSharpness),
+                    dist
+                );
 
-                // Box half-size (covers the full UV space)
-                float2 boxSize = float2(0.5, 0.5);
-
-                // Calculate signed distance
-                float dist = sdBox(centeredUV, boxSize);
-
-                // Create alpha fade (1.0 at center, 0.0 at edges)
-                // dist is negative inside, positive outside
-                float alphaFade = saturate(-dist / _FadeWidth);
-
-                // Apply fade to alpha
-                col.a *= alphaFade;
-
+                col.a *= mask;
                 return col;
             }
-            ENDCG
+            ENDHLSL
         }
     }
-    FallBack "Sprites/Default"
+
+    FallBack Off
 }

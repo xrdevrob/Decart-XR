@@ -1,6 +1,4 @@
-// Copyright (c) Meta Platforms, Inc. and affiliates.
-
-Shader "MRMotifs/SelectivePassthroughDissolver"
+Shader "MRMotifs/SelectivePassthroughDissolverStereo"
 {
     Properties
     {
@@ -18,9 +16,7 @@ Shader "MRMotifs/SelectivePassthroughDissolver"
         ZWrite Off
         ZTest Always
 
-        // 🔸 This blend setup tells the compositor to "show passthrough here"
-        // SrcAlpha = 0 means no virtual color, only passthrough.
-        // Alpha channel drives passthrough visibility.
+        // Premultiplied-style passthrough blending
         Blend Zero OneMinusSrcAlpha
         BlendOp Add
 
@@ -39,17 +35,21 @@ Shader "MRMotifs/SelectivePassthroughDissolver"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
             {
                 float4 pos : SV_POSITION;
                 float2 uv  : TEXCOORD0;
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             v2f vert(appdata v)
             {
                 v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
                 return o;
@@ -57,16 +57,17 @@ Shader "MRMotifs/SelectivePassthroughDissolver"
 
             fixed4 frag(v2f i) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+
                 float noise = tex2D(_NoiseTex, i.uv).r;
 
-                // Dissolve mask controls where passthrough shows through
+                // Dissolve control
                 float mask = saturate((noise - _Level) * _EdgeSharpness);
 
-                // alpha = 1 means passthrough fully visible (virtual hidden)
-                // alpha = 0 means normal virtual view
+                // alpha = passthrough amount (1 = passthrough, 0 = virtual)
                 float alpha = mask;
 
-                // No color contribution — only passthrough control
+                // No RGB output, only alpha for passthrough blend
                 return float4(0, 0, 0, alpha);
             }
             ENDHLSL
