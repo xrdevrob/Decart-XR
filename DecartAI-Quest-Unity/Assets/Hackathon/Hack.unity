@@ -3750,16 +3750,28 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.492
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4241,6 +4253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1222724925}
   - component: {fileID: 1222724924}
+  - component: {fileID: 1222724926}
   m_Layer: 0
   m_Name: VideoControls
   m_TagString: Untagged
@@ -4262,7 +4275,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mediaPlayer: {fileID: 1481109559}
   playerControlsGroup: {fileID: 2041474328}
-  hoverEventWrapper: {fileID: 0}
   playPauseToggle: {fileID: 74826023}
   skipBackToggle: {fileID: 1752926242}
   skipForwardToggle: {fileID: 1714335056}
@@ -4282,11 +4294,26 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1222724926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222724923}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 340b780a6ff2098489caf430a49772e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  videoUI: {fileID: 601129342}
+  scaleFactor: 1.2
+  yAxisOnly: 0
 --- !u!114 &1364080190 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5829911603703383240, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
@@ -4425,6 +4452,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 401765068}
     m_Modifications:
+    - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: _autoOpen
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaSource
       value: 0

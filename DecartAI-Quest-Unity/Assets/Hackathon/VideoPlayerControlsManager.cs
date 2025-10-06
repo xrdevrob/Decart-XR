@@ -4,7 +4,6 @@ using DG.Tweening;
 using RenderHeads.Media.AVProVideo;
 using TMPro;
 using System.Collections;
-using Oculus.Interaction;
 using Tween = DG.Tweening.Tween;
 
 public class VideoPlayerControlsManager : MonoBehaviour
@@ -12,7 +11,6 @@ public class VideoPlayerControlsManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private MediaPlayer mediaPlayer;
     [SerializeField] private CanvasGroup playerControlsGroup;
-    [SerializeField] private PointableCanvasUnityEventWrapper hoverEventWrapper;
 
     [Header("UI Elements (Toggles)")]
     [SerializeField] private Toggle playPauseToggle;
