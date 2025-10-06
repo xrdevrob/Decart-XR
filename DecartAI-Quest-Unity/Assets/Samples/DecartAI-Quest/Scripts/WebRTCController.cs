@@ -56,6 +56,7 @@ namespace QuestCameraKit.WebRTC
             _webcamTexture = passthroughCameraManager.WebCamTexture;
             if (canvasRawImage != null)
             {
+                _webcamTexture.filterMode = FilterMode.Bilinear;
                 canvasRawImage.texture = _webcamTexture;
             }
 

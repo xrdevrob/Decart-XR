@@ -303,6 +303,7 @@ namespace SimpleWebRTC {
                         video.OnVideoReceived += tex =>
                         {
                             // 1) Preferred path: an explicit receiver was assigned by WebRTCConnection.
+                            tex.filterMode = FilterMode.Bilinear;
                             if (VideoReceiver != null)
                             {
                                 if (VideoReceiver.texture != tex)

@@ -87,7 +87,7 @@ namespace SimpleWebRTC {
         public UnityEvent<WebSocketState> WebSocketConnectionChanged;
 
         [Header("WebRTC Connection")]
-        [SerializeField] private bool WebRTCConnectionActive = false;
+        public bool WebRTCConnectionActive = false;
         public UnityEvent WebRTCConnected;
 
         [Header("Video Transmission")]
