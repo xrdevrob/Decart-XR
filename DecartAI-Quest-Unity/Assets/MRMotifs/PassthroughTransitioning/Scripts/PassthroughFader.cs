@@ -127,6 +127,7 @@ namespace MRMotifs.PassthroughTransitioning
 
         private void OnDestroy()
         {
+
             m_oVRPassthroughLayer.passthroughLayerResumed.RemoveListener(OnPassthroughLayerResumed);
         }
 

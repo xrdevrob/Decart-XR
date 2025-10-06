@@ -66,11 +66,14 @@ namespace MRMotifs.PassthroughTransitioning
 
             SetSphereSize(selectiveDistance);
             SetFadeDirection((int)fadeDirection);
-            
+
+
 #if UNITY_ANDROID
             CheckIfPassthroughIsRecommended();
 #endif
         }
+
+
 
         private void SetSphereSize(float size)
         {
@@ -85,6 +88,7 @@ namespace MRMotifs.PassthroughTransitioning
         private void CheckIfPassthroughIsRecommended()
         {
             m_material.SetFloat(s_invertedAlpha, OVRManager.IsPassthroughRecommended() ? 1 : 0);
+            
         }
 
         private void HandleSliderChange(float value)
