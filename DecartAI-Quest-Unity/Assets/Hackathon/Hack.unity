@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: distance
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2119241609839577077, guid: 66a8d85094fa74d4884f99c6fe473bbc, type: 3}
+      propertyPath: autoAdjust
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4752345847531877884, guid: 66a8d85094fa74d4884f99c6fe473bbc, type: 3}
       propertyPath: m_Name
       value: PassthroughDissolver
@@ -1094,7 +1098,7 @@ PrefabInstance:
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaReference
       value: 
-      objectReference: {fileID: 11400000, guid: 27dabd174c82d7c4a84829c0e67a40c6, type: 2}
+      objectReference: {fileID: 11400000, guid: 2d53efc226f69184dbdc34c6f76a9dfa, type: 2}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _autoPlayOnStart
       value: 0

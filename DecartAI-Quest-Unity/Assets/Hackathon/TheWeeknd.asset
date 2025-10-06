@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _alias: 
   _mediaPath:
-    _pathType: 3
-    _path: Hackathon/the-weeknd.mp4
+    _pathType: 2
+    _path: the-weeknd.mp4
   _hints:
     transparency: 0
     alphaPacking: 0
