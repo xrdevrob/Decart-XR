@@ -3,7 +3,8 @@ Shader "MRMotifs/SelectivePassthroughDissolverStereo"
     Properties
     {
         _NoiseTex("Noise Texture", 2D) = "white" {}
-        _Level("Dissolution Level", Range(0,1)) = 0.0
+        // Allow values slightly below 0 to ensure full coverage
+        _Level("Dissolution Level", Range(-0.2,1)) = 0.0
         _EdgeSharpness("Edge Sharpness", Range(1,20)) = 8.0
     }
 
@@ -61,7 +62,7 @@ Shader "MRMotifs/SelectivePassthroughDissolverStereo"
 
                 float noise = tex2D(_NoiseTex, i.uv).r;
 
-                // Dissolve control
+                // No saturate() — allows _Level < 0 to fully cover
                 float mask = saturate((noise - _Level) * _EdgeSharpness);
 
                 // alpha = passthrough amount (1 = passthrough, 0 = virtual)

@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - QDSUISharedThemeColor
+  - QDSUIBorderlessButton
+  - QDSUIIcon
+  - QDSUISecondaryButton
+  - QDSUISection
+  - QDSUIAccentColor
+  - QDSUIToggleButton
+  - QDSUITextSecondaryColor
+  - QDSUIDestructiveButton
+  - QDSUIPrimaryButton
+  - QDSUITextInvertedColor
+  - QDSUITextSecondaryInvertedColor
   layers:
   - Default
   - TransparentFX
@@ -12,7 +24,7 @@ TagManager:
   - Water
   - UI
   - ExcludeFromStream
-  - 
+  - Avatar
   - 
   - 
   - 

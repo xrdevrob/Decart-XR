@@ -40,7 +40,7 @@ Material:
     - _Edges: 0
     - _Inflation: 0
     - _InvertedAlpha: 0
-    - _Level: 1
+    - _Level: -0.2
     - _ZTest: 4
     m_Colors:
     - _EdgeColour1: {r: 0.41509432, g: 0.16708195, b: 0.16708195, a: 1}
