@@ -2930,7 +2930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.225
+      value: -0.216
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4437,12 +4437,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 401765068}
     m_Modifications:
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: _audioMuted
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: _audioVolume
+      value: 0.8209878
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
+      propertyPath: _videoMapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaReference
       value: 
       objectReference: {fileID: 11400000, guid: 2d53efc226f69184dbdc34c6f76a9dfa, type: 2}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _autoPlayOnStart
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4520225963232478244, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: m_Name
@@ -7825,7 +7837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoUI: {fileID: 601129342}
   rayOrigin: {fileID: 1233088019}
-  rayDistance: 1.5
+  defaultRayDistance: 1.5
   followSmooth: 0.15
   yAxisOnly: 0
   rotationSmooth: 0.1

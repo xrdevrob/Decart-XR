@@ -3,7 +3,7 @@ using DG.Tweening;
 
 /// <summary>
 /// Moves and rotates the panel based on the ray interactor while dragging,
-/// preserving the initial offset and allowing scaled forward/back sensitivity.
+/// preserving the initial offset so it never jumps when grabbed.
 /// </summary>
 public class PanelBillboardController : MonoBehaviour
 {
@@ -16,9 +16,6 @@ public class PanelBillboardController : MonoBehaviour
 
     [Tooltip("Default hover distance from the ray origin (used until offset is captured).")]
     [SerializeField] private float defaultRayDistance = 1.5f;
-
-    [Tooltip("Multiplier for how much forward/backward hand motion affects panel movement (higher = more responsive).")]
-    [SerializeField] private float distanceSensitivity = 2.0f;
 
     [Tooltip("Smooth follow factor (0–1). Lower = smoother, higher = snappier.")]
     [SerializeField, Range(0.01f, 1f)] private float followSmooth = 0.2f;
@@ -46,8 +43,8 @@ public class PanelBillboardController : MonoBehaviour
     private Camera _cam;
     private bool _isDragging;
     private Tween _scaleTween, _fadeTween;
-    private float _grabDistance;
-    private Vector3 _grabOffsetWorld;
+    private float _grabDistance;      // actual distance at grab start
+    private Vector3 _grabOffsetWorld; // local offset from ray point to panel center
 
     private Transform PanelT => videoUI ? videoUI.transform : transform;
 
@@ -66,22 +63,14 @@ public class PanelBillboardController : MonoBehaviour
     {
         if (!_isDragging || !rayOrigin || !PanelT || !_cam) return;
 
-        // --- TRANSLATION ALONG RAY (with sensitivity & offset) ---
+        // --- TRANSLATION ALONG RAY (preserving offset) ---
         Vector3 rayStart = rayOrigin.position;
         Vector3 rayDir = rayOrigin.forward;
 
-        // Project current hand-to-camera vector to measure how much the user moved forward/back
-        Vector3 rayToPanel = PanelT.position - rayStart;
-        float currentDistance = Vector3.Dot(rayDir, rayToPanel);
+        // Desired ray hit position (where the hand is pointing)
+        Vector3 targetPos = rayStart + rayDir * _grabDistance + _grabOffsetWorld;
 
-        // Calculate how much the user has moved along the ray since grab start
-        float deltaDistance = (currentDistance - _grabDistance) * distanceSensitivity;
-
-        // Target distance from ray origin
-        float targetDistance = _grabDistance + deltaDistance;
-
-        Vector3 targetPos = rayStart + rayDir * targetDistance + _grabOffsetWorld;
-
+        // Smooth move
         PanelT.position = Vector3.Lerp(
             PanelT.position,
             targetPos,
@@ -112,16 +101,19 @@ public class PanelBillboardController : MonoBehaviour
 
         if (!rayOrigin || !PanelT) return;
 
-        // Capture initial distance and offset at grab start
+        // Measure distance from ray origin to panel at grab start
         Vector3 panelPos = PanelT.position;
         Vector3 rayStart = rayOrigin.position;
         Vector3 rayDir = rayOrigin.forward;
 
         Vector3 rayToPanel = panelPos - rayStart;
-        _grabDistance = Vector3.Dot(rayDir, rayToPanel);
+        _grabDistance = Vector3.Dot(rayDir, rayToPanel); // signed distance along ray
+
+        // If the ray doesn't reach the panel, fallback to default
         if (_grabDistance < 0.05f)
             _grabDistance = defaultRayDistance;
 
+        // Compute offset (the difference between ray point and panel center)
         Vector3 hitPoint = rayStart + rayDir * _grabDistance;
         _grabOffsetWorld = panelPos - hitPoint;
     }
