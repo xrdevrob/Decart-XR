@@ -39,25 +39,85 @@ public class VideoPromptScheduler : MonoBehaviour
         webRtcController = FindFirstObjectByType<QuestCameraKit.WebRTC.WebRTCController>();
     }
 
+    private void OnEnable()
+    {
+        if (mediaPlayer)
+            mediaPlayer.Events.AddListener(OnMediaPlayerEvent);
+    }
+
+    private void OnDisable()
+    {
+        if (mediaPlayer)
+            mediaPlayer.Events.RemoveListener(OnMediaPlayerEvent);
+    }
+
     private void Update()
     {
-        if (!mediaPlayer || !mediaPlayer.Control.IsPlaying())
-        {
+        if (!mediaPlayer || mediaPlayer.Control == null || !mediaPlayer.Control.IsPlaying())
             return;
-        }
 
         float currentTime = (float)mediaPlayer.Control.GetCurrentTime();
         foreach (var item in timedPrompts)
         {
             if (item.hasFired)
-            {
                 continue;
-            }
 
             if (Mathf.Abs(currentTime - item.timestamp) <= triggerTolerance)
-            {
                 TriggerPrompt(item);
-            }
+        }
+    }
+
+    private void OnMediaPlayerEvent(MediaPlayer mp, MediaPlayerEvent.EventType type, ErrorCode error)
+    {
+        switch (type)
+        {
+            case MediaPlayerEvent.EventType.Started:
+            case MediaPlayerEvent.EventType.Unpaused:
+                // Resume prompt tracking
+                break;
+            case MediaPlayerEvent.EventType.Paused:
+                // Video paused — optional: you could temporarily stop Update checks if needed
+                break;
+            case MediaPlayerEvent.EventType.FinishedPlaying:
+                // Reset when the video finishes
+                ResetPrompts();
+                break;
+            case MediaPlayerEvent.EventType.Closing:
+            case MediaPlayerEvent.EventType.ReadyToPlay:
+                ResetPrompts();
+                break;
+            case MediaPlayerEvent.EventType.MetaDataReady:
+                break;
+            case MediaPlayerEvent.EventType.FirstFrameReady:
+                break;
+            case MediaPlayerEvent.EventType.Error:
+                break;
+            case MediaPlayerEvent.EventType.SubtitleChange:
+                break;
+            case MediaPlayerEvent.EventType.Stalled:
+                break;
+            case MediaPlayerEvent.EventType.Unstalled:
+                break;
+            case MediaPlayerEvent.EventType.ResolutionChanged:
+                break;
+            case MediaPlayerEvent.EventType.StartedSeeking:
+                break;
+            case MediaPlayerEvent.EventType.FinishedSeeking:
+                break;
+            case MediaPlayerEvent.EventType.StartedBuffering:
+                break;
+            case MediaPlayerEvent.EventType.FinishedBuffering:
+                break;
+            case MediaPlayerEvent.EventType.PropertiesChanged:
+                break;
+            case MediaPlayerEvent.EventType.PlaylistItemChanged:
+                break;
+            case MediaPlayerEvent.EventType.PlaylistFinished:
+                break;
+            case MediaPlayerEvent.EventType.TextTracksChanged:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
     }
 
@@ -75,12 +135,11 @@ public class VideoPromptScheduler : MonoBehaviour
         item.onTriggered?.Invoke();
     }
 
-    // Optional helper to reset fired flags (e.g., on replay)
     public void ResetPrompts()
     {
         foreach (var item in timedPrompts)
-        {
             item.hasFired = false;
-        }
+
+        Debug.Log("[VideoPromptScheduler] Prompts reset.");
     }
 }

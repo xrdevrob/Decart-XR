@@ -101,12 +101,12 @@ namespace QuestCameraKit.WebRTC
         {
             if (OVRInput.GetDown(OVRInput.Button.One))
             {
-                webRtcConnection.SendNextPrompt(true);
+                //webRtcConnection.SendNextPrompt(true);
             }
 
             if (OVRInput.GetDown(OVRInput.Button.Two))
             {
-                webRtcConnection.SendNextPrompt(false);
+                //webRtcConnection.SendNextPrompt(false);
             }
         }
 

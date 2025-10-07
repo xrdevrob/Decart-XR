@@ -3,6 +3,7 @@
 using Meta.XR.Samples;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace MRMotifs.PassthroughTransitioning
 {
@@ -17,9 +18,12 @@ namespace MRMotifs.PassthroughTransitioning
 
         [Tooltip("Speed of automatic dissolution oscillation.")]
         [SerializeField] private float autoSpeed = 0.5f;
-        
+
         [SerializeField] private float maxValue = 1.0f;
         [SerializeField] private float minValue = -0.2f;
+
+        [Tooltip("Speed of fade transitions (seconds to reach target).")]
+        [SerializeField] private float fadeDuration = 1.5f;
 
         private Camera m_mainCamera;
         private Material m_material;
@@ -29,6 +33,7 @@ namespace MRMotifs.PassthroughTransitioning
         private static readonly int s_dissolutionLevel = Shader.PropertyToID("_Level");
 
         private float m_autoTime;
+        private Coroutine fadeRoutine;
 
         private void Awake()
         {
@@ -61,6 +66,44 @@ namespace MRMotifs.PassthroughTransitioning
         private void HandleSliderChange(float value)
         {
             m_material.SetFloat(s_dissolutionLevel, value);
+        }
+
+        // -------------------- New Methods --------------------
+
+        /// <summary>
+        /// Smoothly fades the dissolution level to the maximum value.
+        /// </summary>
+        public void FadeToMax()
+        {
+            if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+            fadeRoutine = StartCoroutine(FadeRoutine(maxValue));
+        }
+
+        /// <summary>
+        /// Smoothly fades the dissolution level to the minimum value.
+        /// </summary>
+        public void FadeToMin()
+        {
+            if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+            fadeRoutine = StartCoroutine(FadeRoutine(minValue));
+        }
+
+        private IEnumerator FadeRoutine(float target)
+        {
+            float start = m_material.GetFloat(s_dissolutionLevel);
+            float elapsed = 0f;
+
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / fadeDuration);
+                float newValue = Mathf.Lerp(start, target, t);
+                m_material.SetFloat(s_dissolutionLevel, newValue);
+                yield return null;
+            }
+
+            m_material.SetFloat(s_dissolutionLevel, target);
+            fadeRoutine = null;
         }
     }
 }
