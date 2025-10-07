@@ -17,6 +17,9 @@ namespace MRMotifs.PassthroughTransitioning
 
         [Tooltip("Speed of automatic dissolution oscillation.")]
         [SerializeField] private float autoSpeed = 0.5f;
+        
+        [SerializeField] private float maxValue = 1.0f;
+        [SerializeField] private float minValue = -0.2f;
 
         private Camera m_mainCamera;
         private Material m_material;
@@ -34,7 +37,7 @@ namespace MRMotifs.PassthroughTransitioning
 
             m_meshRenderer = GetComponent<MeshRenderer>();
             m_material = m_meshRenderer.material;
-            m_material.SetFloat(s_dissolutionLevel, 0);
+            m_material.SetFloat(s_dissolutionLevel, minValue);
             m_meshRenderer.enabled = true;
 
             SetSphereSize(distance);
