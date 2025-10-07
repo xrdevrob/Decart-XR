@@ -1,60 +1,67 @@
 using UnityEngine;
-using System.Collections;
+using DG.Tweening;
 
+[DisallowMultipleComponent]
 public class PassthroughFader : MonoBehaviour
 {
     [Header("References")]
+    [Tooltip("Reference to the OVR Passthrough Layer to control.")]
     [SerializeField] private OVRPassthroughLayer passthroughLayer;
 
     [Header("Fade Settings")]
+    [Tooltip("Duration of the fade animation (seconds).")]
     [SerializeField] private float fadeDuration = 1.5f;
 
-    [Tooltip("Minimum passthrough opacity when faded out.")]
+    [Tooltip("Minimum opacity when fully faded out (0 = black).")]
     [Range(0f, 1f)]
-    [SerializeField] private float minOpacity = 0.4f;
+    [SerializeField] private float minOpacity = 0.15f;   // lowered from 0.4 → 0.15 for deeper fade
 
-    [Tooltip("Maximum passthrough opacity when fully visible.")]
+    [Tooltip("Maximum opacity when fully visible (1 = normal passthrough).")]
     [Range(0f, 1f)]
     [SerializeField] private float maxOpacity = 1.0f;
 
-    private Coroutine fadeRoutine;
+    private Tween fadeTween;
 
     private void Awake()
     {
+        // Auto-assign passthrough if not set
         if (!passthroughLayer)
             passthroughLayer = FindFirstObjectByType<OVRPassthroughLayer>();
     }
 
-    /// <summary>Fades passthrough to the maximum opacity (fully visible).</summary>
+    private void OnDestroy()
+    {
+        fadeTween?.Kill();
+    }
+
+    /// <summary>Fades the passthrough to full visibility (max opacity).</summary>
     public void FadePassthroughIn()
     {
-        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-        fadeRoutine = StartCoroutine(FadeRoutine(maxOpacity));
+        StartFade(maxOpacity);
     }
 
-    /// <summary>Fades passthrough to the minimum opacity (darker view).</summary>
+    /// <summary>Fades the passthrough to darker view (min opacity).</summary>
     public void FadePassthroughOut()
     {
-        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-        fadeRoutine = StartCoroutine(FadeRoutine(minOpacity));
+        StartFade(minOpacity);
     }
 
-    private IEnumerator FadeRoutine(float target)
+    /// <summary>Starts a DOTween fade toward a target opacity.</summary>
+    private void StartFade(float targetOpacity)
     {
-        if (!passthroughLayer) yield break;
-
-        float start = passthroughLayer.textureOpacity;
-        float elapsed = 0f;
-
-        while (elapsed < fadeDuration)
+        if (!passthroughLayer)
         {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / fadeDuration);
-            passthroughLayer.textureOpacity = Mathf.Lerp(start, target, t);
-            yield return null;
+            Debug.LogWarning("[PassthroughFaderDOTween] No OVRPassthroughLayer assigned.");
+            return;
         }
 
-        passthroughLayer.textureOpacity = target;
-        fadeRoutine = null;
+        fadeTween?.Kill(); // Stop any existing tween
+
+        fadeTween = DOTween.To(
+            () => passthroughLayer.textureOpacity,
+            x => passthroughLayer.textureOpacity = x,
+            targetOpacity,
+            fadeDuration
+        ).SetEase(Ease.InOutSine);
     }
 }
