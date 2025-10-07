@@ -9123,14 +9123,14 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     hasFired: 0
-  - timestamp: 119
+  - timestamp: 118
     prompt: Nightime City Lights World
     onTriggered:
       m_PersistentCalls:
         m_Calls: []
     hasFired: 0
   - timestamp: 128
-    prompt: Sunset City Scape World
+    prompt: 
     onTriggered:
       m_PersistentCalls:
         m_Calls:
@@ -9161,7 +9161,7 @@ MonoBehaviour:
           m_CallState: 2
     hasFired: 0
   - timestamp: 179
-    prompt: 
+    prompt: Sunset City Scape World
     onTriggered:
       m_PersistentCalls:
         m_Calls:
@@ -9192,6 +9192,68 @@ MonoBehaviour:
           m_CallState: 2
     hasFired: 0
   - timestamp: 200
+    prompt: 
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 87318187}
+          m_TargetAssemblyTypeName: MRMotifs.PassthroughTransitioning.PassthroughDissolver,
+            Assembly-CSharp
+          m_MethodName: FadeToMin
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2081375602}
+          m_TargetAssemblyTypeName: PassthroughFader, Assembly-CSharp
+          m_MethodName: FadePassthroughIn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasFired: 0
+  - timestamp: 251
+    prompt: Magical Fantasy World
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 87318187}
+          m_TargetAssemblyTypeName: MRMotifs.PassthroughTransitioning.PassthroughDissolver,
+            Assembly-CSharp
+          m_MethodName: FadeToMax
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2081375602}
+          m_TargetAssemblyTypeName: PassthroughFader, Assembly-CSharp
+          m_MethodName: FadePassthroughOut
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasFired: 0
+  - timestamp: 273
     prompt: 
     onTriggered:
       m_PersistentCalls:
@@ -9380,7 +9442,7 @@ MonoBehaviour:
   yAxisOnly: 0
   rotationSmooth: 0.1
   invertFacing: 1
-  scaleFactor: 1.35
+  scaleFactor: 1.3
   minScale: 0.5
   maxScale: 6
   scaleDuration: 0.3
