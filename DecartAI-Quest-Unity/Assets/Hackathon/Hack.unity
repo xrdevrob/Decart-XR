@@ -5456,7 +5456,7 @@ PrefabInstance:
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _mediaReference
       value: 
-      objectReference: {fileID: 11400000, guid: 2d53efc226f69184dbdc34c6f76a9dfa, type: 2}
+      objectReference: {fileID: 11400000, guid: 0143768baaa21e34192f3d2996ec5239, type: 2}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _autoPlayOnStart
       value: 0
@@ -11972,7 +11972,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   TargetStreamRawImage: {fileID: 863330776}
-  MirageWebSocket: wss://api3.decart.ai/v1/stream?api_key=G6_q2KFlxTk5UnVX82G_OlY5yMfjStO9a4eQqyV1Vec&model=mirage
+  MirageWebSocket: wss://api3.decart.ai/v1/stream?api_key=elysiumcsogDieXjsvgHGeEFvIVcAmqPetCZcDIUpYHrVkRcfLmliegAuNvkHZBQqPLttEc&model=mirage
   LucyWebSocket: wss://api3.decart.ai/v1/stream?api_key=G6_q2KFlxTk5UnVX82G_OlY5yMfjStO9a4eQqyV1Vec&model=lucy_v2v_720p_rt
   UseLucyModel: 0
   StunServerAddress: stun:stun.l.google.com:19302
