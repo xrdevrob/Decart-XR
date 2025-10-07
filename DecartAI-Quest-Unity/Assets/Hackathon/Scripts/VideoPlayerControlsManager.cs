@@ -57,9 +57,6 @@ public class VideoPlayerControlsManager : MonoBehaviour
         HookUpMediaEvents();
 
         StartCoroutine(UpdateTimelineRoutine());
-        
-        double current = mediaPlayer.Info.GetDuration();
-        totalTimeLabel.text = FormatTime(current);
     }
 
     private void OnDestroy()
@@ -137,6 +134,13 @@ public class VideoPlayerControlsManager : MonoBehaviour
             case MediaPlayerEvent.EventType.FinishedPlaying:
                 _cachedDuration = 0;
                 RefreshUIFromPlayer();
+
+                // ✅ When first frame is ready, update total time label
+                if (type == MediaPlayerEvent.EventType.FirstFrameReady && totalTimeLabel)
+                {
+                    double duration = GetDurationSafe();
+                    totalTimeLabel.text = FormatTime(duration);
+                }
                 break;
         }
     }

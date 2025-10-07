@@ -4454,7 +4454,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2d53efc226f69184dbdc34c6f76a9dfa, type: 2}
     - target: {fileID: 2587806781581821363, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: _autoPlayOnStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4520225963232478244, guid: 1ba947712e2367443931c90ca47e1f06, type: 3}
       propertyPath: m_Name
