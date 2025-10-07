@@ -1,69 +1,88 @@
-Shader "Custom/SDFShaderEdgeStretch"
+Shader "Robertolino/UI/SDF Shader"
 {
     Properties
     {
-        _MainTex("Texture", 2D) = "white" {}
-        _Color("Tint", Color) = (1,1,1,1)
-        _EdgeFade("Edge Fade Width", Range(0,0.3)) = 0.15
-        _StretchAmount("Edge Stretch Amount", Range(0,0.2)) = 0.05
+        _MainTex ("Sprite Texture", 2D) = "white" {}
+        _Color ("Tint", Color) = (1,1,1,1)
+        _FadeWidth ("Fade Width", Range(0.01, 0.5)) = 0.1
     }
-
     SubShader
     {
-        Tags { "Queue"="Transparent" "RenderType"="Transparent" }
+        Tags
+        {
+            "Queue"="Transparent"
+            "IgnoreProjector"="True"
+            "RenderType"="Transparent"
+            "PreviewType"="Plane"
+        }
+        Cull Off
+        Lighting Off
+        ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
-        Cull Off ZWrite Off
-
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
-
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+                float4 color : COLOR;
+            };
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
+                float4 color : COLOR;
+            };
             sampler2D _MainTex;
-            float4 _Color;
-            float _EdgeFade;
-            float _StretchAmount;
-
-            struct appdata { float4 vertex:POSITION; float2 uv:TEXCOORD0; };
-            struct v2f { float2 uv:TEXCOORD0; float4 vertex:SV_POSITION; };
-
+            float4 _MainTex_ST;
+            fixed4 _Color;
+            float _FadeWidth;
+            // Signed Distance Function for a box
+            float sdBox(float2 p, float2 b)
+            {
+                float2 d = abs(p) - b;
+                return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
+            }
             v2f vert(appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.color = v.color;
                 return o;
             }
-
-            float2 StretchUV(float2 uv, float stretch)
-            {
-                // squeeze inner region so 0..stretch and 1-stretch..1 map to exact edges
-                float2 stretched = uv;
-                stretched.x = (uv.x < stretch) ? 0.0 :
-                              (uv.x > 1.0 - stretch) ? 1.0 :
-                              (uv.x - stretch) / (1.0 - 2.0 * stretch);
-                stretched.y = (uv.y < stretch) ? 0.0 :
-                              (uv.y > 1.0 - stretch) ? 1.0 :
-                              (uv.y - stretch) / (1.0 - 2.0 * stretch);
-                return stretched;
-            }
-
             fixed4 frag(v2f i) : SV_Target
             {
-                float2 uv = StretchUV(i.uv, _StretchAmount);
-                fixed4 col = tex2D(_MainTex, uv) * _Color;
+                // Sample texture
+                fixed4 col = tex2D(_MainTex, i.uv);
 
-                // fade edges outward
-                float2 edge = smoothstep(0.0, _EdgeFade, i.uv) *
-                              (1.0 - smoothstep(1.0 - _EdgeFade, 1.0, i.uv));
-                float fade = edge.x * edge.y;
-                col.a *= fade;
+                // Apply tint and vertex color
+                col *= _Color * i.color;
+
+                // Convert UV to centered coordinates (-0.5 to 0.5)
+                float2 centeredUV = i.uv - 0.5;
+
+                // Box half-size (covers the full UV space)
+                float2 boxSize = float2(0.5, 0.5);
+
+                // Calculate signed distance
+                float dist = sdBox(centeredUV, boxSize);
+
+                // Create alpha fade (1.0 at center, 0.0 at edges)
+                // dist is negative inside, positive outside
+                float alphaFade = saturate(-dist / _FadeWidth);
+
+                // Apply fade to alpha
+                col.a *= alphaFade;
 
                 return col;
             }
             ENDCG
         }
     }
+    FallBack "Sprites/Default"
 }

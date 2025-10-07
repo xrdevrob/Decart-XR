@@ -30,6 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EdgeFade: 0.06
+    - _FadeWidth: 0.06
     - _StretchAmount: 0.16
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

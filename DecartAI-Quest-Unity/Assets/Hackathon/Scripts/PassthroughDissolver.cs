@@ -24,6 +24,8 @@ namespace MRMotifs.PassthroughTransitioning
 
         [Tooltip("Speed of fade transitions (seconds to reach target).")]
         [SerializeField] private float fadeDuration = 1.5f;
+        
+        [SerializeField] private SimpleAudioFeedback simpleAudioFeedback;
 
         private Camera m_mainCamera;
         private Material m_material;
@@ -76,6 +78,7 @@ namespace MRMotifs.PassthroughTransitioning
         public void FadeToMax()
         {
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+            simpleAudioFeedback.PlayFadeOutSound();
             fadeRoutine = StartCoroutine(FadeRoutine(maxValue));
         }
 
@@ -85,6 +88,7 @@ namespace MRMotifs.PassthroughTransitioning
         public void FadeToMin()
         {
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+            simpleAudioFeedback.PlayFadeInSound();
             fadeRoutine = StartCoroutine(FadeRoutine(minValue));
         }
 

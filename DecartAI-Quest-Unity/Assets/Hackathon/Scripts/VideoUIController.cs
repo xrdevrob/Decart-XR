@@ -10,6 +10,7 @@ public class VideoUIController : MonoBehaviour
     [SerializeField] private CanvasGroup loadingScreenGroup;
     [SerializeField] private CanvasGroup videoScreenGroup;
     [SerializeField] private CanvasGroup streamingCanvas;
+    [SerializeField] private SimpleAudioFeedback simpleAudioFeedback;
 
     [Header("Animation Settings")]
     [SerializeField] private float fadeDuration = 2f;
@@ -70,6 +71,7 @@ public class VideoUIController : MonoBehaviour
     private void OnConnected()
     {
         Debug.Log("[VideoUIController] ICE Connected — fading out loading screen.");
+        simpleAudioFeedback.PlaySuccessSound();
 
         _pulseTween?.Kill();
         DOTween.Sequence()
