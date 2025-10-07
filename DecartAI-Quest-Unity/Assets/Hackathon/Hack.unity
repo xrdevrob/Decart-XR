@@ -8382,13 +8382,13 @@ MonoBehaviour:
         m_Calls: []
     hasFired: 0
   - timestamp: 22
-    prompt: Ambulance Underwolrd Ghost World
+    prompt: Nightmare Realm World
     onTriggered:
       m_PersistentCalls:
         m_Calls: []
     hasFired: 0
   - timestamp: 27
-    prompt: 
+    prompt: Ambulance Emergency World
     onTriggered:
       m_PersistentCalls:
         m_Calls:
@@ -8415,6 +8415,43 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: MRMotifs.PassthroughTransitioning.PassthroughDissolver,
             Assembly-CSharp
           m_MethodName: FadeToMax
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    hasFired: 0
+  - timestamp: 63
+    prompt: California Desert World
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls: []
+    hasFired: 0
+  - timestamp: 69
+    prompt: Neon Ambulance World
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls: []
+    hasFired: 0
+  - timestamp: 83
+    prompt: Evening Sun Desert World
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls: []
+    hasFired: 0
+  - timestamp: 95
+    prompt: Ambulance Emergency World
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 87318187}
+          m_TargetAssemblyTypeName: MRMotifs.PassthroughTransitioning.PassthroughDissolver,
+            Assembly-CSharp
+          m_MethodName: FadeToMin
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
