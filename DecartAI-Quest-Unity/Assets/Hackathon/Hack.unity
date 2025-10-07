@@ -1808,6 +1808,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ba93795ec1d897b4993b62c949c7cf8c, type: 3}
+    - target: {fileID: 5838799367844495644, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5843788363546036569, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2805,6 +2809,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenSelectedHovered.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenUnselectedHovered.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenEndHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -2817,12 +2829,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1222724924}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenSelectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenBeginHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1222724924}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenEndHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenSelectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1222724926}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenUnselectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenEndHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -2833,8 +2857,28 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenUnselectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1222724926}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenBeginHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ShowControls
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenSelectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenSelectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StartDragging
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenUnselectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenUnselectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StopDragging
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenEndHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2845,11 +2889,27 @@ PrefabInstance:
       value: VideoPlayerControlsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenSelectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PanelBillboardController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenUnselectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PanelBillboardController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenEndHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
       propertyPath: _whenBeginHighlight.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenSelectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838296481596215305, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+      propertyPath: _whenUnselectedHovered.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7838296481596215318, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
@@ -3331,16 +3391,64 @@ MonoBehaviour:
   _interactableView: {fileID: 56686548}
   _whenHover:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1222724926}
+        m_TargetAssemblyTypeName: PanelBillboardController, Assembly-CSharp
+        m_MethodName: ShowControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenUnhover:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1222724926}
+        m_TargetAssemblyTypeName: PanelBillboardController, Assembly-CSharp
+        m_MethodName: HideControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenSelect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1222724926}
+        m_TargetAssemblyTypeName: PanelBillboardController, Assembly-CSharp
+        m_MethodName: StartDragging
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenUnselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1222724926}
+        m_TargetAssemblyTypeName: PanelBillboardController, Assembly-CSharp
+        m_MethodName: StopDragging
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenInteractorViewAdded:
     m_PersistentCalls:
       m_Calls: []
@@ -10259,11 +10367,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoUI: {fileID: 601129342}
-  scaleFactor: 1.4
+  canvasGroup: {fileID: 1373137081}
+  scaleFactor: 1.2
   minScale: 0.4
   maxScale: 5
+  scaleDuration: 0.3
   yAxisOnly: 0
   invertFacing: 1
+  rotationSmoothTime: 0.15
+  fadeDuration: 0.4
 --- !u!114 &1222724927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10291,6 +10403,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &1373137081 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 5838799367844495646, guid: 871bb3c95b019cb4891cd36c98c3528e, type: 3}
+  m_PrefabInstance: {fileID: 56686546}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1436385066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11834,6 +11951,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1197256103841168348, guid: c4c3d1e663f18b842bd8c79f246f1f70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2884551590654731997, guid: c4c3d1e663f18b842bd8c79f246f1f70, type: 3}
       propertyPath: field of view
       value: 90
@@ -11897,6 +12018,18 @@ PrefabInstance:
     - target: {fileID: 2884551590666141893, guid: c4c3d1e663f18b842bd8c79f246f1f70, type: 3}
       propertyPath: shouldBoundaryVisibilityBeSuppressed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397935968979122736, guid: c4c3d1e663f18b842bd8c79f246f1f70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566716642649537555, guid: c4c3d1e663f18b842bd8c79f246f1f70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194730371571420436, guid: c4c3d1e663f18b842bd8c79f246f1f70, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

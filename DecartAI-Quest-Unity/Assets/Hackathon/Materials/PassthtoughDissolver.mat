@@ -36,7 +36,7 @@ Material:
     - PixelSnap: 0
     - _BlendOpAlpha: 3
     - _BlendOpColor: 2
-    - _EdgeSharpness: 8
+    - _EdgeSharpness: 15
     - _Edges: 0
     - _Inflation: 0
     - _InvertedAlpha: 0
