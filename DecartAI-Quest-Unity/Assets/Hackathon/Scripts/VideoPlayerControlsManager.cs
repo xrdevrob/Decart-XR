@@ -5,6 +5,7 @@ using RenderHeads.Media.AVProVideo;
 using TMPro;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System;
 
 public class VideoPlayerControlsManager : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
     {
         UnhookMediaEvents();
     }
-    
+
     private void HookUpUI()
     {
         if (playPauseToggle)
@@ -102,7 +103,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
         AddEvent(trigger, EventTriggerType.EndDrag, _ => OnTimelineDragEnd());
     }
 
-    private void AddEvent(EventTrigger trigger, EventTriggerType type, System.Action<BaseEventData> cb)
+    private void AddEvent(EventTrigger trigger, EventTriggerType type, Action<BaseEventData> cb)
     {
         var entry = new EventTrigger.Entry { eventID = type };
         entry.callback.AddListener(new UnityEngine.Events.UnityAction<BaseEventData>(cb));
@@ -135,12 +136,35 @@ public class VideoPlayerControlsManager : MonoBehaviour
                 _cachedDuration = 0;
                 RefreshUIFromPlayer();
 
-                // ✅ When first frame is ready, update total time label
+                // When first frame is ready, update total time label
                 if (type == MediaPlayerEvent.EventType.FirstFrameReady && totalTimeLabel)
                 {
                     double duration = GetDurationSafe();
                     totalTimeLabel.text = FormatTime(duration);
                 }
+                break;
+
+            case MediaPlayerEvent.EventType.Paused:
+                UpdatePlayPauseIcon(false);
+                if (playPauseToggle)
+                {
+                    _ignoreUIChange = true;
+                    playPauseToggle.isOn = false;
+                    _ignoreUIChange = false;
+                }
+                break;
+
+            case MediaPlayerEvent.EventType.Unpaused:
+                UpdatePlayPauseIcon(true);
+                if (playPauseToggle)
+                {
+                    _ignoreUIChange = true;
+                    playPauseToggle.isOn = true;
+                    _ignoreUIChange = false;
+                }
+                break;
+
+            default:
                 break;
         }
     }
@@ -156,8 +180,7 @@ public class VideoPlayerControlsManager : MonoBehaviour
             mediaPlayer.Control.Play();
         else
             mediaPlayer.Control.Pause();
-
-        UpdatePlayPauseIcon(shouldPlay);
+        // Icon + toggle sync is handled by Paused/Unpaused events.
     }
 
     private void UpdatePlayPauseIcon(bool isPlaying)
